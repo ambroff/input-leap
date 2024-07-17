@@ -46,7 +46,7 @@ XArgvParserError::XArgvParserError(const char *fmt, ...) :
 
 Argv::Argv(int argc, const char* const* argv) :
     // FIXME: we assume UTF-8 encoding, but on Windows this is not correct
-    m_exename(inputleap::fs::u8path(argv[0]).filename().u8string())
+    m_exename(inputleap::fs::path(argv[0]).filename().string())
 {
     for (int i = 1; i < argc; i++)
         m_argv.push_back(argv[i]);
@@ -440,10 +440,10 @@ ArgParser::parseGenericArgs(Argv& argv)
         argsBase().m_enableCrypto = false;
     }
     else if (argv.shift("--profile-dir", nullptr, &optarg)) {
-        argsBase().m_profileDirectory = inputleap::fs::u8path(optarg);
+        argsBase().m_profileDirectory = inputleap::fs::path(optarg);
     }
     else if (argv.shift("--plugin-dir", nullptr, &optarg)) {
-        argsBase().m_pluginDirectory = inputleap::fs::u8path(optarg);
+        argsBase().m_pluginDirectory = inputleap::fs::path(optarg);
     }
     else {
         // option not supported here
@@ -587,7 +587,7 @@ ArgParser::updateCommonArgs(Argv &argv)
 std::string ArgParser::parse_exename(const char* arg)
 {
     // FIXME: we assume UTF-8 encoding, but on Windows this is not correct
-    return inputleap::fs::u8path(arg).filename().u8string();
+    return inputleap::fs::path(arg).filename().string();
 }
 
 } // namespace inputleap

@@ -48,7 +48,7 @@ static fs::path unix_home()
     struct passwd* pwentp;
     std::string buffer(size, 0);
     getpwuid_r(getuid(), &pwent, &buffer[0], size, &pwentp);
-    return fs::u8path(pw_dir(pwentp));
+    return fs::path(pw_dir(pwentp));
 }
 
 #else // not HAVE_GETPWUID_R
@@ -67,7 +67,7 @@ static fs::path profile_basedir()
     // https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
     const char* dir = std::getenv("XDG_CONFIG_HOME");
     if (dir != nullptr)
-        return fs::u8path(dir);
+        return fs::path(dir);
     return unix_home() / ".config/";
 #else
     // macos has its own standards

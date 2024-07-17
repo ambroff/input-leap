@@ -16,7 +16,7 @@
 */
 
 // this header must come first so that it picks up the filesystem implementation
-#include <ghc/fs_impl.hpp>
+#include <filesystem>
 
 #include "filesystem.h"
 #if SYSAPI_WIN32

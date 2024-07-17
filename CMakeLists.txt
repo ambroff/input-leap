@@ -26,7 +26,7 @@ option(INPUTLEAP_BUILD_X11 "Build with XWindows support" ON)
 option(INPUTLEAP_BUILD_LIBEI "Build with libei support" OFF)
 option(INPUTLEAP_DEPLOY_FLATPAK_SCRIPT "Deploy Flatpak script [Experimental]" OFF)
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -262,8 +262,6 @@ endif()
 
 # For config.h, save the results based on a template (config.h.in).
 configure_file(res/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/lib/config.h)
-
-include_directories(SYSTEM "${CMAKE_SOURCE_DIR}/ext/gulrak-filesystem/include")
 
 #
 # OpenSSL

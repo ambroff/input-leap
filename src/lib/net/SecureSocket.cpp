@@ -326,27 +326,27 @@ bool SecureSocket::load_certificates(const inputleap::fs::path& path)
     }
     else {
         if (!inputleap::fs::is_regular_file(path)) {
-            showError("ssl certificate doesn't exist: " + path.u8string());
+            showError("ssl certificate doesn't exist: " + path.string());
             return false;
         }
     }
 
     int r = 0;
-    r = SSL_CTX_use_certificate_file(m_ssl->m_context, path.u8string().c_str(), SSL_FILETYPE_PEM);
+    r = SSL_CTX_use_certificate_file(m_ssl->m_context, path.c_str(), SSL_FILETYPE_PEM);
     if (r <= 0) {
-        showError("could not use ssl certificate: " + path.u8string());
+        showError("could not use ssl certificate: " + path.native());
         return false;
     }
 
-    r = SSL_CTX_use_PrivateKey_file(m_ssl->m_context, path.u8string().c_str(), SSL_FILETYPE_PEM);
+    r = SSL_CTX_use_PrivateKey_file(m_ssl->m_context, path.c_str(), SSL_FILETYPE_PEM);
     if (r <= 0) {
-        showError("could not use ssl private key: " + path.u8string());
+        showError("could not use ssl private key: " + path.native());
         return false;
     }
 
     r = SSL_CTX_check_private_key(m_ssl->m_context);
     if (!r) {
-        showError("could not verify ssl private key: " + path.u8string());
+        showError("could not verify ssl private key: " + path.native());
         return false;
     }
 
@@ -686,17 +686,16 @@ bool SecureSocket::verify_peer_certificate(const inputleap::fs::path& fingerprin
          inputleap::format_ssl_fingerprint(fingerprint_sha256.data).c_str());
 
     // Provide debug hint as to what file is being used to verify fingerprint trust
-    LOG_NOTE("fingerprint_db_path: %s", fingerprint_db_path.u8string().c_str());
+    LOG_NOTE("fingerprint_db_path: %s", fingerprint_db_path.c_str());
 
     inputleap::FingerprintDatabase db;
     db.read(fingerprint_db_path);
 
     if (!db.fingerprints().empty()) {
-        LOG_NOTE("Read %zd fingerprints from: %s", db.fingerprints().size(),
-             fingerprint_db_path.u8string().c_str());
+        LOG_NOTE("Read %zd fingerprints from: %s", db.fingerprints().size(), fingerprint_db_path.c_str());
     } else {
         LOG_NOTE("Could not read fingerprints from: %s",
-             fingerprint_db_path.u8string().c_str());
+             fingerprint_db_path.c_str());
     }
 
     if (db.is_trusted(fingerprint_sha256)) {

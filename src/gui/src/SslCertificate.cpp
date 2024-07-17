@@ -47,7 +47,7 @@ void SslCertificate::generateCertificate()
                 inputleap::fs::create_directories(cert_dir);
             }
 
-            inputleap::generate_pem_self_signed_cert(cert_path.u8string());
+            inputleap::generate_pem_self_signed_cert(cert_path.string());
         }  catch (const std::exception& e) {
             Q_EMIT error(QString("SSL tool failed: %1").arg(e.what()));
             return;
@@ -71,9 +71,9 @@ void SslCertificate::generate_fingerprint(const inputleap::fs::path& cert_path)
         }
 
         inputleap::FingerprintDatabase db;
-        db.add_trusted(inputleap::get_pem_file_cert_fingerprint(cert_path.u8string(),
+        db.add_trusted(inputleap::get_pem_file_cert_fingerprint(cert_path.string(),
                                                               inputleap::FingerprintType::SHA1));
-        db.add_trusted(inputleap::get_pem_file_cert_fingerprint(cert_path.u8string(),
+        db.add_trusted(inputleap::get_pem_file_cert_fingerprint(cert_path.string(),
                                                               inputleap::FingerprintType::SHA256));
         db.write(local_path);
 
