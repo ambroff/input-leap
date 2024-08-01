@@ -19,6 +19,7 @@
              (gnu packages qt)
              (gnu packages tls)
              (gnu packages version-control)
+             (gnu packages xdisorg)
              (gnu packages xorg)
              (guix build-system cmake)
              (guix build-system meson)
@@ -71,9 +72,18 @@
        gulrak-filesystem
        libei
        libportal
+       libxkbcommon
        ninja
        openssl
        pkg-config
        qt5compat
        qtbase
-       qttools))
+       qttools
+
+       ;; Stuff required when building with X11 support
+       libice
+       libsm
+       libxi
+       libxinerama
+       libxrandr
+       libxtst))
