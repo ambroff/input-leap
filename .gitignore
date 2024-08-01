@@ -37,3 +37,4 @@ CMakeLists.txt.user
 /deps/
 /out/build/x64-Debug
 /.cache/
+/compile_commands.json
