@@ -79,6 +79,7 @@
        qt5compat
        qtbase
        qttools
+       qtwayland
 
        ;; Stuff required when building with X11 support
        libice
